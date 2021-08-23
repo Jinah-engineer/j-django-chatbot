@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Chatbot</title>
+
+        {% block scripts %}
+            <script>
+                function chatTrain() {
+                    alert('Training......');
+                }
+
+                function sendAsk() {
+                    ctext = document.getElementById("chattext").value;
+                    if (ctext == "") {
+                        document.getElementById("chattext").focus();
+                        return false;
+                    }
+                    {#alert(ctext);#}
+                    addtext = "<div style='margin: 14px 0; text-align: right; '><span style='background-color:#3388cc; padding:5px 8px; border-radius:3px;'>" + ctext + "</span></div>"
+                    document.getElementById("chatbox").innerHTML += addtext;
+
+                    bottext = "<div style='margin: 14px 0; text-align: left; '><span style='background-color:#DDDDDD; padding:5px 8px; border-radius:3px;'>" + "hello" + "</span></div>"
+                    document.getElementById("chatbox").innerHTML += addtext;
+                }
+            </script>
+        {% endblock %}
+
+        {%  block styles %}
+            <style>
+                .chatheader {
+                    position: fixed;
+                    left: 0;
+                    top: 0;
+                    width: 100%;
+                    padding: 10px 0;
+                    background-color: #DDD;
+                    color: #000;
+                    text-align: center;
+                }
+                .chatfooter {
+                    position: fixed;
+                    left: 0;
+                    bottom: 0;
+                    width: 100%;
+                    padding: 10px 0;
+                    background-color: #DDD;
+                    color: #000;
+                    text-align: center;
+                }
+            </style>
+        {% endblock %}
+    </head>
+    <body style="height: :100%; background-color: #BBCCDD;">
+        <div style="padding: 0px; height:100%; background-color: #e8e8e8;">
+            <div class="chatheader">
+                <table width="100%">
+                    <tr>
+                        <td width="50%" align="left">My Chat</td>
+                        <td width="50%" align="right">
+                            <span onclick="chatTrain()" style="cursor:pointer;">Train</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div id="chatbox" style="height: 450px; margin-top: 55px; background-color: #BBCCDD;"></div>
+            <div class="chatfooter">
+                 <table width="100%">
+                    <tr>
+                        <td width="85%" align="left">
+                            <input type="text" id="chattext"
+                                   style="padding: 10px 0; width: 100%; border: solid 0px #000;">
+                        </td>
+                        <td width="15%" align="right">
+                            <button style="padding: 10px 0; width: 100%;" onclick="sendAsk()">SEND</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    </body>
+</html>
