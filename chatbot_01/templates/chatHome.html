@@ -21,29 +21,67 @@
                             }
                         }
                     }
+                    return cookieValue;
                 }
 
+                var csrftoken = getCookie('csrftoken');
+
+                var xhr;
+
                 function chatTrain() {
-                    alert('Training......');
+                    var strurl = "chattrain";
+                    {#alert(strurl);#}
+                    {#return false;#}
+
+                    xhr = new XMLHttpRequest();
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState == 4) {
+                            var data = xhr.responseText;
+
+                            var obj = JSON.parse(data);
+                            alert(obj.result);
+                        }
+                    }
+                    xhr.open("GET", strurl);
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                    xhr.send(null);('Training......');
                 }
 
                 function sendAsk() {
-                    ctext = document.getElementById("chattext").value;
-                    if (ctext == "") {
+                    chattext = document.getElementById("chattext").value;
+                    if (chattext == "") {
                         document.getElementById("chattext").focus();
                         return false;
                     }
 
                     {#alert(ctext);#}
-                    addtext = "<div style='margin: 14px 0; text-align: right; '><span style='background-color:#3388cc; padding:5px 8px; border-radius:3px;'>" + ctext + "</span></div>"
+                    addtext = "<div style='margin: 14px 0; text-align: right; '><span style='background-color:#3388cc; padding:5px 8px; border-radius:3px;'>" + chattext + "</span></div>"
                     document.getElementById("chatbox").innerHTML += addtext;
 
-                    bottext = "<div style='margin: 14px 0; text-align: left; '><span style='background-color:#DDDDDD; padding:5px 8px; border-radius:3px;'>" + "hello" + "</span></div>"
-                    document.getElementById("chatbox").innerHTML += bottext;
+                    // chathome_source.html
+                    var strurl = "chatanswer?chattext=" + chattext;
+                    alert(strurl);
+                    {#return false;#}
 
-                    // scroll 조정
-                    let mydiv = document.getElementById("chatbox");
-                    mydiv.scrollTop = document.getElementById("chatbox").scrollHeight;
+                    xhr = new XMLHttpRequest();
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState == 4) {
+                            var data = xhr.responseText;
+
+                            var obj = JSON.parse(data);
+                            {#alert(obj.anstext);#}
+
+                            bottext = "<div style='margin: 14px 0; text-align: left; '><span style='background-color:#DDDDDD; padding:5px 8px; border-radius:3px;'>" + obj.anstext + "</span></div>"
+                            document.getElementById("chatbox").innerHTML += bottext;
+
+                            // scroll 조정
+                            let mydiv = document.getElementById("chatbox");
+                            mydiv.scrollTop = document.getElementById("chatbox").scrollHeight;
+                        }
+                    }
+                    xhr.open("GET", strurl);
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                    xhr.send(null);
                 }
             </script>
         {% endblock %}
